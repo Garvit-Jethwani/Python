@@ -51,6 +51,8 @@ Validation:
   Rationalize the importance of the test: This test checks that the method correctly raises an error when b_coeffs of size not equal to order+1 is passed, which is an important error condition that the method must handle.
 
 roost_feedback [5/17/2024, 6:25:05 PM]:remove unwanted code or comment it out
+
+roost_feedback [5/17/2024, 6:29:50 PM]:remove unwanted code or comment it
 """
 
 # ********RoostGPT********
