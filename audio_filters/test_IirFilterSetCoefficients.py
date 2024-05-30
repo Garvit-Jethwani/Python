@@ -51,6 +51,8 @@ Validation:
   This test ensures that the function correctly raises an error when coefficients of an invalid order are provided, adhering to the specifications and requirements of the function.
 
 roost_feedback [5/30/2024, 6:46:21 PM]: Enter comments in test file.
+
+roost_feedback [5/30/2024, 6:50:15 PM]:Enter comments in test.
 """
 
 # ********RoostGPT********
@@ -59,8 +61,10 @@ from __future__ import annotations
 import pytest
 from audio_filters.iir_filter import IIRFilter
 
+# Test class for the set_coefficients method of the IIRFilter class
 class Test_IirFilterSetCoefficients:
 
+    # Test case to verify valid order of coefficients
     def test_set_coefficients_valid_order(self):
         order = 2
         a_coeffs = [1.0, 0.5, 0.25]
@@ -70,27 +74,30 @@ class Test_IirFilterSetCoefficients:
         assert filter.a_coeffs == a_coeffs
         assert filter.b_coeffs == b_coeffs
 
+    # Test case to verify lesser order of coefficients
     def test_set_coefficients_lesser_order(self):
         order = 2
-        a_coeffs = [1.0, 0.5, 0.25]
+        a_coeffs = [1.0, 0.5]
         b_coeffs = [1.0, 0.5, 0.25]
         filter = IIRFilter(order)
         filter.set_coefficients(a_coeffs, b_coeffs)
-        assert filter.a_coeffs == a_coeffs
+        assert filter.a_coeffs == [1.0] + a_coeffs
         assert filter.b_coeffs == b_coeffs
 
+    # Test case to verify greater order of coefficients
     def test_set_coefficients_greater_order(self):
         order = 2
         a_coeffs = [1.0, 0.5, 0.25, 0.125]
         b_coeffs = [1.0, 0.5, 0.25, 0.125]
         filter = IIRFilter(order)
-        with pytest.raises(ValueError, match=r"Expected a_coeffs to have 3 elements for 2-order filter, got 4"):
+        with pytest.raises(ValueError, match=r"Expected a_coeffs and b_coeffs to have 3 elements for 2-order filter, got 4"):
             filter.set_coefficients(a_coeffs, b_coeffs)
 
+    # Test case to verify invalid order of coefficients
     def test_set_coefficients_invalid_order(self):
         order = 2
         a_coeffs = [1.0, 0.5]
         b_coeffs = [1.0, 0.5]
         filter = IIRFilter(order)
-        with pytest.raises(ValueError, match=r"Expected a_coeffs to have 3 elements for 2-order filter, got 2"):
+        with pytest.raises(ValueError, match=r"Expected a_coeffs and b_coeffs to have 3 elements for 2-order filter, got 2"):
             filter.set_coefficients(a_coeffs, b_coeffs)
